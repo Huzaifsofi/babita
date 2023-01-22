@@ -1,0 +1,245 @@
+A.
+#include<stdio.h>
+#include<conio.h>
+struct NODE
+{
+ struct NODE *lchild;
+ int data;
+ struct NODE *rchild;
+};
+typedef struct NODE node;
+node* getnode()
+{
+ node *temp;
+ temp=(node *)malloc(sizeof(node));
+ printf("\nEnter the data: ");
+ scanf("%d",&temp->data);
+ temp->lchild=NULL;
+ temp->rchild=NULL;
+ return temp;
+}
+node *create()
+{
+ int ch;
+ node *root,*temp,*ptr;
+ root=NULL;
+ do{
+ temp=getnode();
+ if(root==NULL)
+root=temp;
+ else
+ {
+ptr=root;
+while(ptr!=NULL)
+{
+if(temp->data<ptr->data)
+{
+ if(ptr->lchild==NULL)
+ {
+ ptr->lchild=temp;
+ break;
+ }
+ else
+ ptr=ptr->lchild;
+ }
+ else
+ {
+ if(ptr->rchild==NULL)
+ {
+ptr->rchild=temp;
+break;
+ }
+ else
+ ptr=ptr->rchild;
+}
+ }//while
+ }
+ printf("\nDo you want to add more 
+node(Y/N): ");
+ // scanf(" %c",&ch);
+ ch=getche();
+ }while(ch=='Y'||ch=='y');
+ return root;
+}
+void postorder(node *ptr)
+{
+ if(ptr!=NULL)
+ {
+ postorder(ptr->lchild);
+ postorder(ptr->rchild);
+ printf(" %d",ptr->data);
+ }
+}
+void preorder(node *ptr)
+{
+ if(ptr!=NULL)
+ {
+ printf(" %d",ptr->data);
+ preorder(ptr->lchild);
+ preorder(ptr->rchild);
+ }
+}
+void main()
+{
+ int ch;
+ node *root=NULL;
+ clrscr();
+ while(1)
+ {
+ printf("\n1:Create a BST.");
+ printf("\n2:preorder of BST.");
+ printf("\n3:Postorder of BST");
+ printf("\n4:Exit");
+ printf("\nEnter the Choice:");
+ scanf("%d",&ch);
+ switch(ch)
+ {
+case 1: root=create();
+break;
+case 2: preorder(root);
+break;
+case 3: postorder(root);
+break;
+case 4: exit(0);
+ }
+ }
+ getch();
+}
+
+
+
+B.
+#include<stdio.h>
+#include<conio.h>
+struct NODE
+{
+ int data;
+ struct NODE *next;
+};
+typedef struct NODE node;
+node *list=NULL,*last;
+node * getnode() //create a node
+{
+ node *temp;
+ temp=(node *)malloc(sizeof(node));
+ printf("\nEnter the data: ");
+ scanf("%d",&temp->data);
+ temp->next=NULL;
+ return temp;
+}
+void create()
+{
+ int n,i;
+ node *temp;
+ printf("\nEnter total nodes to be 
+creted");
+ scanf("%d",&n);
+ for(i=0;i<n;i++)
+ {
+ temp=getnode();
+if(list==NULL)
+list=temp;
+else
+ last->next=temp;
+last=temp;
+ }
+}
+void display()
+{
+ node *ptr;
+ for(ptr=list;ptr!=NULL;ptr=ptr->next)
+ printf("\t%d",ptr->data);
+}
+void count()
+{
+ node *ptr;
+ int cnt;
+ for(ptr=list,cnt=0;ptr!=NULL;ptr=ptr-
+>next,cnt++);
+ printf("\ntotal no of Nodes=%d",cnt);
+}
+void main()
+{
+ clrscr();
+ create();
+ display();
+ count();
+ getch();
+}
+
+
+
+ANGULAR JS-
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.min.js"></script>
+</head>
+
+
+<h1>SYBCA SYLLABUS</h1>
+<div ng-view></div>
+
+
+<body>
+<div ng-app="mainApp">
+<p><a href="#dm">301.Digital Marketing</a></p>
+<p><a href="#dm">302.Data Structure</a></p>
+<p><a href="#dm">303.AngularJs</a></p>
+
+<div ng-view></div> 
+<script type="text/ng-template"id="Digital Marketing.html">
+<h2>Digital Marketing</h2>
+
+<p>Unit 1.Introduction of Digital Marketing <br>
+   Unit 2.<br>
+   Unit 3.<br>
+   </p>
+{{message}}
+</script>
+
+
+<script type="text/ng-template"id="Data Structure.html">
+<h2>Data Structure</h2>
+
+<p>Unit 1.Introduction of Data Structure <br>
+   Unit 2.<br>
+   Unit 3.<br>
+   </p>
+{{message}}
+</script>
+
+<script type="text/ng-template"id="AngularJs.html">
+<h2>AngularJs</h2>
+
+<p>Unit 1.Introduction of AngularJs <br>
+   Unit 2.<br>
+   Unit 3.<br>
+   </p>
+{{message}}
+</script>
+</div>
+
+<script>
+var mainApp=angular.module("mainApp",['ngRoute']);
+mainApp.config(['$routeProvider',function($routeProvider){$routeProvider.when('/dm',{templateUrl:'Digital Marketing.html',controller:'dmController'
+})
+.when('/dm',{templateUrl:'Data Structure.html',controller:'dsController'})
+.when('/dm',{templateUrl:'AngularJs.html',controller:'ajsController'})
+)]);
+
+
+mainApp.controller('dmController',function($scope){$scope.message="This page will be used to display Digital Marketing";
+});
+
+
+mainApp.controller('dsController',function($scope){$scope.message="This page will be used to display Data Structure";
+});
+
+mainApp.controller('ajsController',function($scope){$scope.message="This page will be used to display AngularJs";
+});
+
+
+</script>
+</body>
+</html>
